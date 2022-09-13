@@ -36,9 +36,10 @@ void LinkedList::PrintList(){
     }
     ListNode *current = first; // iniriallize the "current" to first
     while(current != nullptr){
-        cout << current->data << "\n";
+        cout << current->data <<" ";
         current = current->next;
     }
+    cout<<"\n";
 
 }
 void LinkedList::Push_front(int x){
@@ -49,7 +50,7 @@ void LinkedList::Push_front(int x){
 void LinkedList::Push_back(int x){
     ListNode *newNode = new ListNode(x);
 
-    if(first == 0){
+    if(first == nullptr){
         first = newNode;
         return;
     }
@@ -62,13 +63,13 @@ void LinkedList::Push_back(int x){
 }
 void LinkedList::Delete(int x){
     ListNode *current = first;
-    ListNode *previous = 0;
-    while(current !=0 && current->data !=x){
+    ListNode *previous = nullptr;
+    while(current !=nullptr && current->data !=x){
         previous = current;//when we don't find x , we traversal the list
         current = current->next;
     }
 
-    if(current == 0){
+    if(current == nullptr){
         cout<< "There is no " << x << " in list.\n";
         return;
     }
@@ -96,21 +97,17 @@ void LinkedList::Clear(){
 }
 
 void LinkedList::Reverse(){
-    if (first == nullptr || first->next == nullptr){
-        return;//list has nothing or only one thing
-    }
     ListNode *previous = nullptr;
     ListNode *current = first;
-    ListNode *preceding = first->next;
-
-    while(preceding != nullptr){
+    
+    while(current != nullptr){
+        ListNode *tmp = current->next;
         current->next = previous;
         previous = current;
-        current = preceding;
-        preceding = preceding->next;
+        current = tmp;
     }
-    current->next = previous;
-    first = current;
+    first = previous; 
+    
 }
 
 int main(){
@@ -123,9 +120,10 @@ int main(){
     List.Delete(5);
     List.PrintList();
     List.Reverse();
+    List.PrintList();
     List.Clear();
     List.PrintList();
-;    return 0;
+    return 0;
 }
 
 
