@@ -112,17 +112,38 @@ void LinkedList::Reverse(){
 
 int main(){
     LinkedList List;
-    List.Push_front(3);
-    List.Push_front(6);
-    List.Push_front(7);
-    List.Push_back(5);
-    List.PrintList();
-    List.Delete(5);
-    List.PrintList();
-    List.Reverse();
-    List.PrintList();
-    List.Clear();
-    List.PrintList();
+    cout << "please enter the function you want,\n";
+    cout << "ex: pf, pb, prL, del, re, cl, enter \"end\" close.\n";
+    cout << "Enter the function:\n";
+    string func;
+    int num;
+    while(func != "end"){
+        cin >> func;
+        if(func == "pf"){
+            cout << "please enter a num:";
+            cin >> num;
+            List.Push_front(num);
+        }
+        else if(func == "pb"){
+            cout << "please enter a num:";
+            cin >> num;
+            List.Push_back(num);
+        }
+        else if(func == "prL"){
+            List.PrintList();
+        }
+        else if(func == "del"){
+            cout << "please enter a num:";
+            cin >> num;
+            List.Delete(num);
+        }
+        else if(func == "re"){
+            List.Reverse();
+        }
+        else if(func == "cl"){
+            List.Clear();
+        }
+    }
     return 0;
 }
 
