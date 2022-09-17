@@ -1,77 +1,82 @@
 #include <iostream>
 using namespace std;
 
-struct ListNode{
+struct listNode{
     int data;
-    ListNode *next; //each listnode need save next node's address
-    ListNode();//declration
-    ListNode(int a);
+    listNode *next;
+    listNode(int x = 0, listNode *n = nullptr);
 };
-ListNode::ListNode(){//we need add :: 
-    this->data = 0;
-    this->next = nullptr;
-}
-ListNode::ListNode(int a){
-    this->data = a;
-    this->next = nullptr;
-}
+listNode::listNode(int x , listNode *n)
+    :data{x},next{nullptr}
+    {}
 
-struct LinkedList{
-    ListNode *first;//the first Node
-    LinkedList();// declration
-    void PrintList();
-    void Push_front(int x);// new data->n1->n2...null
-    void Push_back(int x);// n1->n2...new data->null
-    void Delete(int x);// delet int x in list
-    void Clear();//clear the all list
-    void Reverse();//7->3->1 => 1->3->7
+struct linkedList{
+    listNode *first;
+    linkedList();
+    void printList();
+    void push_front(int x);
+    void push_back(int x);
+    bool isEmpty();
+    void del(int x);
+    void clear();
+    void reverse();
 };
-LinkedList::LinkedList(){
-    this->first = nullptr;
-}
-void LinkedList::PrintList(){
-    if(first == 0){
-        cout << "List is empty.\n";
+
+linkedList::linkedList()
+    :first{nullptr}
+    {}
+
+void linkedList::printList(){
+    if(isEmpty()){
+        cout << "The list is empty.";
         return;
     }
-    ListNode *current = first; // iniriallize the "current" to first
+    listNode *current = first;
     while(current != nullptr){
-        cout << current->data <<" ";
+        cout << current->data << "\n";
         current = current->next;
     }
-    cout<<"\n";
-
 }
-void LinkedList::Push_front(int x){
-    ListNode *newNode = new ListNode(x);
-    newNode->next = first;
-    first = newNode ;// newNode become the "first"
-}
-void LinkedList::Push_back(int x){
-    ListNode *newNode = new ListNode(x);
 
+void linkedList::push_front(int x){
     if(first == nullptr){
+        listNode *newNode = new listNode(x);
         first = newNode;
         return;
     }
+    listNode *newNode = new listNode(x);
+    newNode->next = first;
+    first = newNode;
+}
 
-    ListNode *current = first;
+void linkedList::push_back(int x){
+    if(first == nullptr){
+        listNode *newNode = new listNode(x);
+        first = newNode;
+        return;
+    }  
+    listNode *newNode = new listNode(x);
+    listNode *current = first;
     while(current->next != nullptr){
-        current =current->next;
+        current = current->next;
     }
     current->next = newNode;
 }
-void LinkedList::Delete(int x){
-    ListNode *current = first;
-    ListNode *previous = nullptr;
-    while(current !=nullptr && current->data !=x){
-        previous = current;//when we don't find x , we traversal the list
+
+bool linkedList::isEmpty(){
+    return first == nullptr;
+}
+
+void linkedList::del(int x){
+    listNode *current = first; 
+    listNode *previous = nullptr;
+    while(current != nullptr && current->data != x){
+        previous = current;
         current = current->next;
     }
-
     if(current == nullptr){
-        cout<< "There is no " << x << " in list.\n";
-        return;
+        cout << "There is no " << x << " in list."; 
+        return; 
     }
     else if(current == first){
         first = current->next;
@@ -87,31 +92,37 @@ void LinkedList::Delete(int x){
     }
 }
 
-void LinkedList::Clear(){
+void linkedList::clear(){
+    if(isEmpty()){
+        cout << "The list is Empty.";
+        return;
+    }   
     while(first != nullptr){
-        ListNode *current = first;
+        listNode *current = first;
         first = first->next;
         delete current;
         current = nullptr;
     }
 }
 
-void LinkedList::Reverse(){
-    ListNode *previous = nullptr;
-    ListNode *current = first;
-    
+void linkedList::reverse(){
+    if(isEmpty()){
+        cout << "The list is Empty.";
+        return;
+    }
+    listNode *current = first;
+    listNode *previous = nullptr;
     while(current != nullptr){
-        ListNode *tmp = current->next;
+        listNode *tmp = current->next;
         current->next = previous;
         previous = current;
         current = tmp;
     }
-    first = previous; 
-    
+    first = previous;
 }
 
 int main(){
-    LinkedList List;
+    linkedList List;
     cout << "please enter the function you want,\n";
     cout << "ex: pf, pb, prL, del, re, cl, enter \"end\" close.\n";
     cout << "Enter the function:\n";
@@ -122,29 +133,27 @@ int main(){
         if(func == "pf"){
             cout << "please enter a num:";
             cin >> num;
-            List.Push_front(num);
+            List.push_front(num);
         }
         else if(func == "pb"){
             cout << "please enter a num:";
             cin >> num;
-            List.Push_back(num);
+            List.push_back(num);
         }
         else if(func == "prL"){
-            List.PrintList();
+            List.printList();
         }
         else if(func == "del"){
             cout << "please enter a num:";
             cin >> num;
-            List.Delete(num);
+            List.del(num);
         }
         else if(func == "re"){
-            List.Reverse();
+            List.reverse();
         }
         else if(func == "cl"){
-            List.Clear();
+            List.clear();
         }
     }
     return 0;
 }
-
-
