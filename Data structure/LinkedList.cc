@@ -7,7 +7,7 @@ struct listNode{
     listNode(int x = 0, listNode *n = nullptr);
 };
 listNode::listNode(int x , listNode *n)
-    :data{x},next{nullptr}
+    :data{x},next{n}
     {}
 
 struct linkedList{
@@ -52,6 +52,10 @@ void linkedList::push_front(int x){
 void linkedList::push_back(int x){
     if(first == nullptr){
         listNode *newNode = new listNode(x);
+        //為什麼要new是因為，如果不是使用new創建的對象，
+        //就是使用stack空間，然而function結束的時候他就會跟著消滅，
+        //但是我們這邊想要做到的是加入一個新的東西到List裡面。
+        //所以我們必須得使用不會消滅的heap空間(動態記憶體配置，也就是new)。
         first = newNode;
         return;
     }  
